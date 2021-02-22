@@ -24,6 +24,4 @@ public class ProductConfig {
             productRepository.saveAll(List.of(product1, product2, product3, product4));
         };
     }
-
-
 }

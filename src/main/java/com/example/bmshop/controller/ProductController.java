@@ -5,8 +5,7 @@ import com.example.bmshop.repository.ProductRepository;
 import com.example.bmshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 @RequestMapping(path = "api/product")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -26,4 +25,21 @@ public class ProductController {
         return productService.getProducts();
     }
 
+    @PostMapping
+    public void addProduct(@RequestBody Product product){
+        productService.addProduct(product);
+    }
+
+    @PutMapping(path = "{productId}")
+    public void updateProduct(@PathVariable("productId") Long productId,
+                              @RequestParam(required = false) String name_product,
+                              @RequestParam(required = false) Double quantity){
+
+         productService.updateProduct(productId, name_product, quantity);
+    }
+
+    @DeleteMapping(path = "{productId}")
+    public void deleteProduct(@PathVariable("productId") Long productId){
+        productService.deleteProduct(productId);
+    }
 }

@@ -6,6 +6,7 @@ import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -15,12 +16,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "product_sequence")
     private Long id;
-
-    @NotNull
     private String name_product;
     private Double weight;
-
-    @NotNull
     private Double price;
     private Double quantity;
 
