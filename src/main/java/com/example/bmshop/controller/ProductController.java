@@ -32,10 +32,10 @@ public class ProductController {
 
     @PutMapping(path = "{productId}")
     public void updateProduct(@PathVariable("productId") Long productId,
-                              @RequestParam(required = false) String name_product,
-                              @RequestParam(required = false) Double quantity){
+                              @RequestParam(required = false) String nameProduct,
+                              @RequestParam(required = false) float quantity){
 
-         productService.updateProduct(productId, name_product, quantity);
+         productService.updateProduct(productId, nameProduct, quantity);
     }
 
     @DeleteMapping(path = "{productId}")

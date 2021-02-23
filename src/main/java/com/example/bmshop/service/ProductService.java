@@ -1,6 +1,5 @@
 package com.example.bmshop.service;
 
-import com.example.bmshop.entity.Customer;
 import com.example.bmshop.entity.Product;
 import com.example.bmshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +29,12 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct(Long productId, String name_product, double quantity){
-        Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalStateException("Product with id " + productId + " does not exist."));
+    public void updateProduct(Long productId, String name_product, float quantity){
+        Product product = productRepository.findById(productId).orElseThrow(() ->
+                new IllegalStateException("Product with id " + productId + " does not exist."));
 
-        if(!Objects.equals(product.getName_product(), name_product)){
-            product.setName_product(name_product);
+        if(!Objects.equals(product.getName(), name_product)){
+            product.setName(name_product);
         }
         if(!Objects.equals(product.getQuantity(), quantity)){
             product.setQuantity(quantity);

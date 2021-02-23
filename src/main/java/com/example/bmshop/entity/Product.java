@@ -1,12 +1,8 @@
 package com.example.bmshop.entity;
 
-import com.sun.istack.NotNull;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "product")
 public class Product {
 
     @Id
@@ -16,16 +12,23 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "product_sequence")
     private Long id;
-    private String name_product;
-    private Double weight;
-    private Double price;
-    private Double quantity;
+    private String name;
+    private float weight;
+    private float price;
+    private float quantity;
 
     public Product() {};
 
-    public Product(Long id, String name_product, Double weight, Double price, Double quantity) {
+    public Product(Long id, String name, float weight, float price, float quantity) {
         this.id = id;
-        this.name_product = name_product;
+        this.name = name;
+        this.weight = weight;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public Product(String name, float weight, float price, float quantity) {
+        this.name = name;
         this.weight = weight;
         this.price = price;
         this.quantity = quantity;
@@ -35,35 +38,35 @@ public class Product {
         return id;
     }
 
-    public String getName_product() {
-        return name_product;
+    public String getName() {
+        return name;
     }
 
-    public void setName_product(String name_product) {
-        this.name_product = name_product;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Double getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 
-    public Double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public Double getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 }

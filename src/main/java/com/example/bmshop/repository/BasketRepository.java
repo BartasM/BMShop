@@ -1,2 +1,7 @@
-package com.example.bmshop.repository;public interface BasketRepository {
+package com.example.bmshop.repository;
+
+import com.example.bmshop.entity.Basket;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BasketRepository extends JpaRepository<Basket, Long> {
 }

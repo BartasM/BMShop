@@ -1,2 +1,13 @@
-package com.example.bmshop.controller;public class BasketUsedController {
+package com.example.bmshop.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(path = "api/basketused")
+public class BasketUsedController {
+
+
+
+
 }
