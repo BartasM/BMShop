@@ -18,7 +18,7 @@ public class Basket {
     private Customer customer;
 
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<BasketCreated> basketCreated;
+    private Set<BasketPosition> basketPosition;
 
     public Basket(Long id) {
         this.id = id;
@@ -45,11 +45,11 @@ public class Basket {
         this.customer = customer;
     }
 
-    public Set<BasketCreated> getBasketCreatedSet() {
-        return basketCreated;
+    public Set<BasketPosition> getBasketCreatedSet() {
+        return basketPosition;
     }
 
-    public void setBasketCreatedSet(Set<BasketCreated> basketCreated) {
-        this.basketCreated = basketCreated;
+    public void setBasketCreatedSet(Set<BasketPosition> basketPosition) {
+        this.basketPosition = basketPosition;
     }
 }

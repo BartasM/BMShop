@@ -6,18 +6,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "basked_created")
-public class BasketCreated {
+@Table(name = "basked_position")
+public class BasketPosition {
 
     @Id
-    @Column(name = "basketCreatedId")
+    @Column(name = "basketPositionId")
     @SequenceGenerator(
-            name = "BasketCreated_generator",
-            sequenceName = "BasketCreated_generator",
+            name = "BasketPosition_generator",
+            sequenceName = "BasketPosition_generator",
             allocationSize = 1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "BasketCreated_generator")
+            generator = "BasketPosition_generator")
     private Long basketCreatedId;
 
     @JsonIgnore

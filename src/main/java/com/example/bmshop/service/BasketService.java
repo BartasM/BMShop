@@ -3,7 +3,7 @@ package com.example.bmshop.service;
 import com.example.bmshop.dto.BasketCreatedDTO;
 import com.example.bmshop.dto.BasketCreatedModDTO;
 import com.example.bmshop.entity.Basket;
-import com.example.bmshop.entity.BasketCreated;
+import com.example.bmshop.entity.BasketPosition;
 import com.example.bmshop.entity.Customer;
 import com.example.bmshop.entity.Product;
 import com.example.bmshop.repository.BasketCreatedRepository;
@@ -63,20 +63,20 @@ public class BasketService {
         Optional<Basket> basketOptional = basketRepository.findById(basketCreatedDTO.getBasketId());
         Optional<Product> productOptional = productRepository.findById(basketCreatedDTO.getProduktId());
         if(basketOptional.isPresent() && productOptional.isPresent()){
-            BasketCreated basketCreated = new BasketCreated();
-            basketCreated.setBasket(basketOptional.get());
-            basketCreated.setProductId(productOptional.get());
-            basketCreated.setQuantity(basketCreatedDTO.getQuantity());
-            basketCreatedRepository.saveAndFlush(basketCreated);
+            BasketPosition basketPosition = new BasketPosition();
+            basketPosition.setBasket(basketOptional.get());
+            basketPosition.setProductId(productOptional.get());
+            basketPosition.setQuantity(basketCreatedDTO.getQuantity());
+            basketCreatedRepository.saveAndFlush(basketPosition);
         }
     }
 
     @Transactional
     public void updateBasketCreated(Long basketCreatedId, BasketCreatedModDTO basketCreatedModDTO){
-        BasketCreated basketCreated = basketCreatedRepository.findById(basketCreatedId)
+        BasketPosition basketPosition = basketCreatedRepository.findById(basketCreatedId)
                 .orElseThrow(() -> new IllegalStateException("basketCreatedId: " + basketCreatedId + " doesn't exist."));
-        basketCreated.setQuantity(basketCreatedModDTO.getQuantity());
-        basketCreatedRepository.save(basketCreated);
+        basketPosition.setQuantity(basketCreatedModDTO.getQuantity());
+        basketCreatedRepository.save(basketPosition);
     }
 
 }
