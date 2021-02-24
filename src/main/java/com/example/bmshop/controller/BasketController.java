@@ -1,6 +1,6 @@
 package com.example.bmshop.controller;
 
-import com.example.bmshop.dto.BasketCreatedDTO;
+import com.example.bmshop.dto.BasketPositionDTO;
 import com.example.bmshop.dto.BasketCreatedModDTO;
 import com.example.bmshop.entity.Basket;
 import com.example.bmshop.service.BasketService;
@@ -39,14 +39,14 @@ public class BasketController {
     }
 
     @PostMapping
-    public void addBasketCreated(@RequestBody BasketCreatedDTO basketCreatedDTO){
-        basketService.addBasketCreated(basketCreatedDTO);
+    public void addBasketCreated(@RequestBody BasketPositionDTO basketPositionDTO){
+        basketService.addBasketPosition(basketPositionDTO);
     }
 
-    @PutMapping(path = "{basketCreatedId}")
-    public void updateBasketCreated(@PathVariable("basketCreatedId") Long basketCreatedId,
+    @PutMapping(path = "{basketPositionId}")
+    public void updateBasketCreated(@PathVariable("basketPositionId") Long basketCreatedId,
                                     @RequestBody BasketCreatedModDTO basketCreatedModDTO){
-        basketService.updateBasketCreated(basketCreatedId, basketCreatedModDTO);
+        basketService.updateBasketPosition(basketCreatedId, basketCreatedModDTO);
     }
 
 

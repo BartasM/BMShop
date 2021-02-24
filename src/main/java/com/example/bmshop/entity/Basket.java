@@ -45,7 +45,7 @@ public class Basket {
         this.customer = customer;
     }
 
-    public Set<BasketPosition> getBasketCreatedSet() {
+    public Set<BasketPosition> getBasketPositionSet() {
         return basketPosition;
     }
 

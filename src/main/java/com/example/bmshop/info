@@ -27,3 +27,5 @@ Scenariusze:
 4. Update BuckedUsed musi byc bo klient moze zmieniac ilosc produktow
 5. Usuniecie produktu z koszyka
 
+Swagger UI:
+http://localhost:8080/swagger-ui.html#/

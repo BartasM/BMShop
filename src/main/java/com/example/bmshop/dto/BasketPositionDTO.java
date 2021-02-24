@@ -1,9 +1,9 @@
 package com.example.bmshop.dto;
 
-public class BasketCreatedDTO {
+public class BasketPositionDTO {
 
     private Long basketId;
-    private Long produktId;
+    private Long productId;
     private int quantity;
 
     public Long getBasketId() {
@@ -14,12 +14,12 @@ public class BasketCreatedDTO {
         this.basketId = basketId;
     }
 
-    public Long getProduktId() {
-        return produktId;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduktId(Long produktId) {
-        this.produktId = produktId;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public int getQuantity() {
