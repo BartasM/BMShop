@@ -3,18 +3,11 @@ package com.example.bmshop.service;
 import com.example.bmshop.entity.Customer;
 import com.example.bmshop.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.NotAcceptableStatusException;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,6 +32,11 @@ public class CustomerService {
         } else {
             customerRepository.save(customer);
         }
+    }
+
+    public Customer customerFindById(Long customerId){
+        return customerRepository.findById(customerId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer id: " + customerId + " doesn't exist."));
     }
 
     @Transactional

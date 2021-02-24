@@ -1,6 +1,7 @@
 package com.example.bmshop.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Basket {
@@ -12,11 +13,20 @@ public class Basket {
     @Id
     private Long id;
 
-    @Column(name = "customerId")
-    private Long customerId;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "customerId", nullable = false)
+    private Customer customer;
 
-    public Basket(Long customerId) {
-        this.customerId = customerId;
+    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<BasketCreated> basketCreated;
+
+    public Basket(Long id) {
+        this.id = id;
+    }
+    public Basket(){}
+
+    public Basket(Customer customer) {
+        this.customer = customer;
     }
 
     public Long getId() {
@@ -27,11 +37,19 @@ public class Basket {
         this.id = id;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Customer getCustomerId() {
+        return customer;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCustomerId(Customer customerId) {
+        this.customer = customer;
+    }
+
+    public Set<BasketCreated> getBasketCreatedSet() {
+        return basketCreated;
+    }
+
+    public void setBasketCreatedSet(Set<BasketCreated> basketCreated) {
+        this.basketCreated = basketCreated;
     }
 }

@@ -1,15 +1,13 @@
 package com.example.bmshop.controller;
 
 import com.example.bmshop.entity.Product;
-import com.example.bmshop.repository.ProductRepository;
 import com.example.bmshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(path = "api/product")
 public class ProductController {
 

@@ -1,0 +1,29 @@
+DTO - Cześć danych do przekazania aby nie wysyłać całej ENCJI na zewnątrz
+
+DTO na podstawie encji zrobić (np. pesel masz w Encji Customer to nie chcesz go wysyłać więc byłoby np. same imię i naziwsko)
+Wtedy robię converter i robię tak, że ConverterEntityToDTO, a w klasie robie metodę convertToDTO która pobiera encje i returnuje DTO a
+
+Można zamieniać ENTITY z DTO na poziomie SERVICE ALBO CONTROLLERA.
+
+Testowałem SERVICE robiąc MOCKi repositoriów - mock service a inject mock repisitory
+wtedy jest jest given() then()
+
+CONTROLLER INTEGRATION TESTS
+@Autowired
+@Mockmvc
+Controller testy Integracyjne,
+wstrzykuje repozytoria
+(test Geta)
+np.
+1. robię instacje klienta i robie repositorySave tego klienta
+2. pobrac tym mvcperform (u lewego w projekcie kopia)
+
+
+Strona -> prodkty koszyka
+Scenariusze:
+1. Utworz koszyk/zamowienie
+2. DodajDoKoszykaProdukty do koszyka
+3. Dodaj do istniejacego koszyka produkt (sprawdz czy koszyk istnieje i wywoluje inna metode czyli nie tworzy koszyk tylko dodaje produkt do koszyka)
+4. Update BuckedUsed musi byc bo klient moze zmieniac ilosc produktow
+5. Usuniecie produktu z koszyka
+

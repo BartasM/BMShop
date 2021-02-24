@@ -1,6 +1,7 @@
 package com.example.bmshop.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Product {
@@ -68,5 +69,29 @@ public class Product {
 
     public void setQuantity(float quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (Float.compare(product.weight, weight) != 0) return false;
+        if (Float.compare(product.price, price) != 0) return false;
+        if (Float.compare(product.quantity, quantity) != 0) return false;
+        if (!Objects.equals(id, product.id)) return false;
+        return Objects.equals(name, product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (weight != +0.0f ? Float.floatToIntBits(weight) : 0);
+        result = 31 * result + (price != +0.0f ? Float.floatToIntBits(price) : 0);
+        result = 31 * result + (quantity != +0.0f ? Float.floatToIntBits(quantity) : 0);
+        return result;
     }
 }

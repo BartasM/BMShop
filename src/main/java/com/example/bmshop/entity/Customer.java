@@ -1,14 +1,8 @@
 package com.example.bmshop.entity;
 
-import com.sun.istack.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
+import java.util.Objects;
 
 @Entity
 public class Customer {
@@ -82,5 +76,29 @@ public class Customer {
                 ", dateOfBirth=" + dateOfBirth +
                 ", active=" + active +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        if (active != customer.active) return false;
+        if (!Objects.equals(id, customer.id)) return false;
+        if (!Objects.equals(name, customer.name)) return false;
+        if (!Objects.equals(email, customer.email)) return false;
+        return Objects.equals(dateOfBirth, customer.dateOfBirth);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        result = 31 * result + (active ? 1 : 0);
+        return result;
     }
 }
