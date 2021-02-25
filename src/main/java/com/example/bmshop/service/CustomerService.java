@@ -64,4 +64,14 @@ public class CustomerService {
             customerRepository.deleteById(customerId);
         }
     }
+
+    @Transactional
+    public void importCustomerFromCSV(){
+
+    }
+
+    @Transactional
+    public void exportCustomersToCsv(){
+
+    }
 }

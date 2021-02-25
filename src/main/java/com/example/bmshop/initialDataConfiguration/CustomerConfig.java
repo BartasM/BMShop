@@ -24,18 +24,24 @@ public class CustomerConfig {
             Customer kasia = new Customer(
                     2L,
                     "Kasia",
-                    "Kasia@gmail.com",
+                    "kasia@gmail.com",
                     LocalDate.of(2004, 6, 15),
                     true);
 
             Customer bolek = new Customer(
                     3L,
                     "Bolek",
-                    "Bolek@gmail.com",
+                    "bolek@gmail.com",
                     LocalDate.of(2001, 3, 12),
                     true);
 
-            customerRepository.saveAll(List.of(bartek, kasia, bolek));
+            Customer grzegorz = new Customer(
+                    4L,
+                    "grzegorz",
+                    "grzegorz@gmail.com",
+                    LocalDate.of(2001, 3, 12),
+                    true);
+            customerRepository.saveAll(List.of(bartek, kasia, bolek, grzegorz));
         };
     }
 }

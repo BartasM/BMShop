@@ -39,16 +39,13 @@ public class BasketController {
     }
 
     @PostMapping
-    public void addBasketCreated(@RequestBody BasketPositionDTO basketPositionDTO){
+    public void addBasketPosition(@RequestBody BasketPositionDTO basketPositionDTO){
         basketService.addBasketPosition(basketPositionDTO);
     }
 
     @PutMapping(path = "{basketPositionId}")
-    public void updateBasketCreated(@PathVariable("basketPositionId") Long basketCreatedId,
+    public void updateBasketPosition(@PathVariable("basketPositionId") Long basketPositionId,
                                     @RequestBody BasketCreatedModDTO basketCreatedModDTO){
-        basketService.updateBasketPosition(basketCreatedId, basketCreatedModDTO);
+        basketService.updateBasketPosition(basketPositionId, basketCreatedModDTO);
     }
-
-
-
 }
