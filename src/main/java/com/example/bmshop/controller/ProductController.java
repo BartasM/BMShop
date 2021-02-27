@@ -19,8 +19,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getProduct(){
+    public List<Product> getProducts(){
         return productService.getProducts();
+    }
+
+    @GetMapping(path = "{productId}")
+    public Product getProduct(@PathVariable Long productId){
+        return productService.productFindById(productId);
     }
 
     @PostMapping

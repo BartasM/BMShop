@@ -5,7 +5,6 @@ import com.example.bmshop.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -22,6 +21,11 @@ public class CustomerController {
     @GetMapping
     public List<Customer> getCustomers() {
         return customerService.getCustomers();
+    }
+
+    @GetMapping(path = "{customerId}")
+    public Customer getCustomer(@PathVariable Long customerId){
+        return customerService.customerFindById(customerId);
     }
 
     @PostMapping

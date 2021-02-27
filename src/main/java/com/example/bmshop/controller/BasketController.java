@@ -1,7 +1,7 @@
 package com.example.bmshop.controller;
 
 import com.example.bmshop.dto.BasketPositionDTO;
-import com.example.bmshop.dto.BasketCreatedModDTO;
+import com.example.bmshop.dto.BasketPositionModDTO;
 import com.example.bmshop.entity.Basket;
 import com.example.bmshop.service.BasketService;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +45,7 @@ public class BasketController {
 
     @PutMapping(path = "{basketPositionId}")
     public void updateBasketPosition(@PathVariable("basketPositionId") Long basketPositionId,
-                                    @RequestBody BasketCreatedModDTO basketCreatedModDTO){
-        basketService.updateBasketPosition(basketPositionId, basketCreatedModDTO);
+                                    @RequestBody BasketPositionModDTO basketPositionModDTO){
+        basketService.updateBasketPosition(basketPositionId, basketPositionModDTO);
     }
 }

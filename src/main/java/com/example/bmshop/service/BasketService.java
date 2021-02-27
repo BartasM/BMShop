@@ -1,6 +1,6 @@
 package com.example.bmshop.service;
 
-import com.example.bmshop.dto.BasketCreatedModDTO;
+import com.example.bmshop.dto.BasketPositionModDTO;
 import com.example.bmshop.dto.BasketPositionDTO;
 import com.example.bmshop.entity.Basket;
 import com.example.bmshop.entity.BasketPosition;
@@ -86,10 +86,10 @@ public class BasketService {
     }
 
     @Transactional
-    public void updateBasketPosition(Long basketPositionId, BasketCreatedModDTO basketCreatedModDTO) {
+    public void updateBasketPosition(Long basketPositionId, BasketPositionModDTO basketPositionModDTO) {
         BasketPosition basketPosition = basketPositionRepository.findById(basketPositionId)
                 .orElseThrow(() -> new IllegalStateException("basketPositionId: " + basketPositionId + " doesn't exist."));
-        basketPosition.setQuantity(basketCreatedModDTO.getQuantity());
+        basketPosition.setQuantity(basketPositionModDTO.getQuantity());
         basketPositionRepository.save(basketPosition);
     }
 

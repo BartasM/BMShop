@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -20,32 +19,36 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProducts(){
+    public Product productFindById(Long productId) {
+        return productRepository.findById(productId).orElseThrow(
+                () -> new IllegalArgumentException("ProductId: " + productId + "doesn't exist."));
+    }
+
+    public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         productRepository.save(product);
     }
 
     @Transactional
-    public void updateProduct(Long productId, String name_product, float quantity){
+    public void updateProduct(Long productId, String name_product, float quantity) {
+
         Product product = productRepository.findById(productId).orElseThrow(() ->
                 new IllegalStateException("Product with id " + productId + " does not exist."));
 
-        if(!Objects.equals(product.getName(), name_product)){
+        if (!Objects.equals(product.getName(), name_product) ) {
             product.setName(name_product);
         }
-        if(!Objects.equals(product.getQuantity(), quantity)){
+
+        if (!Objects.equals(product.getQuantity(), quantity)) {
             product.setQuantity(quantity);
         }
     }
 
     @Transactional
-    public void deleteProduct(Long productId){
-        Optional<Product> productOptional = productRepository.findById(productId);
-               if(productOptional.isPresent()){
-                   productRepository.deleteById(productId);
-               }
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
     }
 }

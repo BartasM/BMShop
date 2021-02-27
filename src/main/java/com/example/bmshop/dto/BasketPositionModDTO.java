@@ -1,6 +1,6 @@
 package com.example.bmshop.dto;
 
-public class BasketCreatedModDTO {
+public class BasketPositionModDTO {
 
     private int quantity;
 

@@ -1,10 +1,15 @@
 package com.example.bmshop.entity;
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Product {
+public class Product implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 853329709778725025L;
 
     @Id
     @SequenceGenerator(name = "product_sequence",
@@ -35,6 +40,9 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     public Long getId() {
         return id;
     }
