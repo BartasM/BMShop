@@ -19,10 +19,17 @@ public class Customer {
     private Long id;
     private String name;
     private String email;
+    private String password;
     private LocalDate dateOfBirth;
     private boolean active;
 
     public Customer() {}
+
+    public Customer(Long id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 
     public Customer(String name, String email) {
         this.name = name;
