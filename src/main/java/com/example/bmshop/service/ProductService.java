@@ -21,30 +21,38 @@ public class ProductService {
 
     public Product productFindById(Long productId) {
         return productRepository.findById(productId).orElseThrow(
-                () -> new IllegalArgumentException("ProductId: " + productId + "doesn't exist."));
+                () -> new IllegalArgumentException("ProductId : " + productId + " doesn't exist."));
     }
 
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
-    public void addProduct(Product product) {
+    public Product addProduct(Product product) {
         productRepository.save(product);
+        return product;
     }
 
     @Transactional
-    public void updateProduct(Long productId, String name_product, float quantity) {
+    public Product updateProduct(Long productId, String name_product, float quantity) {
 
-        Product product = productRepository.findById(productId).orElseThrow(() ->
-                new IllegalStateException("Product with id " + productId + " does not exist."));
+        Product product = productFindById(productId);
 
-        if (!Objects.equals(product.getName(), name_product) ) {
-            product.setName(name_product);
+        if (name_product == null || name_product.isEmpty() || name_product.isBlank()) {
+            throw new IllegalArgumentException("name_product is null or blank");
+        } else {
+            if (!Objects.equals(product.getName(), name_product)) {
+                product.setName(name_product);
+            }
         }
-
-        if (!Objects.equals(product.getQuantity(), quantity)) {
-            product.setQuantity(quantity);
+        if(quantity < 0){
+            throw new IllegalArgumentException("quantity is null or has to be greater than 0.");
+        } else {
+            if (!Objects.equals(product.getQuantity(), quantity)) {
+                product.setQuantity(quantity);
+            }
         }
+        return product;
     }
 
     @Transactional
