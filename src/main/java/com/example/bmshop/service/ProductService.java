@@ -29,8 +29,7 @@ public class ProductService {
     }
 
     public Product addProduct(Product product) {
-        productRepository.save(product);
-        return product;
+        return productRepository.save(product);
     }
 
     @Transactional
@@ -52,7 +51,7 @@ public class ProductService {
                 product.setQuantity(quantity);
             }
         }
-        return product;
+        return productRepository.saveAndFlush(product);
     }
 
     @Transactional

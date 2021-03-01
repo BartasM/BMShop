@@ -25,12 +25,13 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public void addNewCustomer(Customer customer) {
+    public Customer addNewCustomer(Customer customer) {
         Optional<Customer> customerByEmail = customerRepository.customerFindByEmail(customer.getEmail());
-        if (customerByEmail.isPresent()) {
+        if (!customerByEmail.isEmpty()) {
             throw new IllegalStateException("email already taken");
         } else {
             customerRepository.save(customer);
+            return customer;
         }
     }
 
@@ -40,7 +41,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public void updateCustomer(Long customerId,
+    public Customer updateCustomer(Long customerId,
                                String name,
                                String email) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
@@ -49,12 +50,18 @@ public class CustomerService {
         if(name != null && name.length()>0 &&
                 !Objects.equals(customer.getName(), name)){
             customer.setName(name);
+        }else{
+            new IllegalArgumentException("Customer already has that name or is null.");
         }
 
         if(email != null && email.length()>0 &&
                 !Objects.equals(customer.getEmail(), email)){
             customer.setEmail(email);
+        }else {
+            new IllegalArgumentException("Customer already has that email or is null.");
         }
+        customerRepository.saveAndFlush(customer);
+        return customer;
     }
 
     @Transactional

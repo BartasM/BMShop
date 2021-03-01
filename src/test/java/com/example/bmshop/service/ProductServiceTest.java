@@ -112,11 +112,13 @@ public class ProductServiceTest {
 
         //Given
         Product product = new Product(3L, "Banana", 3.0f, 5.0f, 5.0f);
-
+        given(productRepository.findById(3L)).willReturn(Optional.of(product));
+        given(productRepository.saveAndFlush(product)).willReturn(
+                new Product(3L, "Milk", 3.0f, 3.0f, 3.0f));
         //When
-       // Product result = productService.updateProduct();
+        Product result = productService.updateProduct(3L, "Milk", 5.0f);
 
         //Then
-        assertThat(product).isEqualTo(product);
+        assertThat(result.getName()).isEqualTo("Milk");
     }
 }

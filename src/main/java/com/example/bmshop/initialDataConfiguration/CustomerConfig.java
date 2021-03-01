@@ -5,11 +5,13 @@ import com.example.bmshop.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Configuration
+@ActiveProfiles({"dev"})
 public class CustomerConfig {
 
     @Bean
