@@ -28,8 +28,7 @@ public class CustomerServiceTest {
 
     @Captor
     private ArgumentCaptor<Customer> customersArgumentCaptor;
-    @Captor
-    private ArgumentCaptor<Customer> customersArgumentCaptor2;
+
     @Captor
     private ArgumentCaptor<Long> longCustomersArgumentCaptor;
 
@@ -114,6 +113,20 @@ public class CustomerServiceTest {
         assertThat(customerTest.getId()).isEqualTo(customerResult.getId());
         assertThat(customerTest.getName()).isEqualTo(customerResult.getName());
         assertThat(customerTest.getEmail()).isEqualTo(customerResult.getEmail());
+    }
 
+    @Test
+    public void deleteCustomerTest(){
+        //Given
+        Long customerId = 10L;
+
+        //When
+        customerService.deleteCustomer(customerId);
+
+        //Then
+        verify(customerRepository,times(1)).deleteById(longCustomersArgumentCaptor.capture());
+        Long resultId = longCustomersArgumentCaptor.getValue();
+
+        assertThat(customerId).isEqualTo(resultId);
     }
 }

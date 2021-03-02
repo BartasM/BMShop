@@ -59,22 +59,24 @@ public class BasketService {
     }
 
     @Transactional
-    public void addBasketPosition(BasketPositionDTO basketPositionDTO) {
+    public BasketPosition addBasketPosition(BasketPositionDTO basketPositionDTO) {
+
+        BasketPosition basketPosition = new BasketPosition();
 
         Optional<Basket> basketOptional = basketRepository.findById(basketPositionDTO.getBasketId());
         Optional<Product> productOptional = productRepository.findById(basketPositionDTO.getProductId());
 
-        if (basketOptional.isPresent() && productOptional.isPresent()) {
-            if (basketPositionRepository.findById(basketPositionDTO.getBasketId()).isPresent()) {
-                updateBasketPositionQuantity(basketPositionDTO.getBasketId(), basketPositionDTO.getProductId(), basketPositionDTO.getQuantity());
-            }else{
-                BasketPosition basketPosition = new BasketPosition();
-                basketPosition.setBasket(basketOptional.get());
-                basketPosition.setProductId(productOptional.get());
-                basketPosition.setQuantity(basketPositionDTO.getQuantity());
-                basketPositionRepository.saveAndFlush(basketPosition);
-            }
+        if (basketOptional.get().getId() != null && basketOptional.get().getId() > 0
+                && productOptional.get().getId() != null && productOptional.get().getId() > 0) {
+            updateBasketPositionQuantity(basketPositionDTO.getBasketId(),
+                    basketPositionDTO.getProductId(), basketPositionDTO.getQuantity());
+        } else {
+            basketPosition.setBasket(basketOptional.get());
+            basketPosition.setProductId(productOptional.get());
+            basketPosition.setQuantity(basketPositionDTO.getQuantity());
+            basketPositionRepository.saveAndFlush(basketPosition);
         }
+        return basketPosition;
     }
 
     public void updateBasketPositionQuantity(Long basketPositionId, Long productId, int quantity) {
@@ -86,11 +88,12 @@ public class BasketService {
     }
 
     @Transactional
-    public void updateBasketPosition(Long basketPositionId, BasketPositionModDTO basketPositionModDTO) {
+    public BasketPosition updateBasketPosition(Long basketPositionId, BasketPositionModDTO basketPositionModDTO) {
         BasketPosition basketPosition = basketPositionRepository.findById(basketPositionId)
                 .orElseThrow(() -> new IllegalStateException("basketPositionId: " + basketPositionId + " doesn't exist."));
         basketPosition.setQuantity(basketPositionModDTO.getQuantity());
         basketPositionRepository.save(basketPosition);
+        return basketPosition;
     }
 
 }

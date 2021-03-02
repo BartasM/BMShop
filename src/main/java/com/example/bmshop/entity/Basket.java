@@ -1,6 +1,7 @@
 package com.example.bmshop.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -20,10 +21,17 @@ public class Basket {
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<BasketPosition> basketPosition;
 
+    public Basket(){}
+
     public Basket(Long id) {
         this.id = id;
     }
-    public Basket(){}
+
+    public Basket(Long id, Customer customer, Set<BasketPosition> basketPosition) {
+        this.id = id;
+        this.customer = customer;
+        this.basketPosition = basketPosition;
+    }
 
     public Basket(Customer customer) {
         this.customer = customer;
@@ -51,5 +59,25 @@ public class Basket {
 
     public void setBasketCreatedSet(Set<BasketPosition> basketPosition) {
         this.basketPosition = basketPosition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Basket basket = (Basket) o;
+
+        if (!Objects.equals(id, basket.id)) return false;
+        if (!Objects.equals(customer, basket.customer)) return false;
+        return Objects.equals(basketPosition, basket.basketPosition);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+        result = 31 * result + (basketPosition != null ? basketPosition.hashCode() : 0);
+        return result;
     }
 }

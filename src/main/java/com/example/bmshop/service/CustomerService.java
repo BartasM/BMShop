@@ -66,19 +66,6 @@ public class CustomerService {
 
     @Transactional
     public void deleteCustomer(Long customerId){
-        Optional<Customer> customerOptional = customerRepository.findById(customerId);
-        if(customerOptional.isPresent()){
-            customerRepository.deleteById(customerId);
-        }
-    }
-
-    @Transactional
-    public void importCustomerFromCSV(){
-
-    }
-
-    @Transactional
-    public void exportCustomersToCsv(){
-
+        customerRepository.deleteById(customerId);
     }
 }

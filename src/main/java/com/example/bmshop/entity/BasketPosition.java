@@ -18,7 +18,7 @@ public class BasketPosition {
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "BasketPosition_generator")
-    private Long basketCreatedId;
+    private Long basketPositionId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -31,13 +31,36 @@ public class BasketPosition {
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
+    public  BasketPosition(){}
 
-    public Long getBasketCreatedId() {
-        return basketCreatedId;
+    public BasketPosition(Long basketPositionId) {
+        this.basketPositionId = basketPositionId;
     }
 
-    public void setBasketCreatedId(Long basketCreatedId) {
-        this.basketCreatedId = basketCreatedId;
+    public BasketPosition(Long basketPositionId, Basket basket) {
+        this.basketPositionId = basketPositionId;
+        this.basket = basket;
+    }
+
+    public BasketPosition(Long basketPositionId, Basket basket, Product productId) {
+        this.basketPositionId = basketPositionId;
+        this.basket = basket;
+        this.productId = productId;
+    }
+
+    public BasketPosition(Long basketPositionId, Basket basket, Product productId, int quantity) {
+        this.basketPositionId = basketPositionId;
+        this.basket = basket;
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
+    public Long getBasketPositionId() {
+        return basketPositionId;
+    }
+
+    public void setBasketPositionId(Long basketPositionId) {
+        this.basketPositionId = basketPositionId;
     }
 
     public Basket getBasket() {
