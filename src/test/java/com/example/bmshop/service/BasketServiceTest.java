@@ -16,8 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -80,70 +82,89 @@ public class BasketServiceTest {
     @Test
     public void addBasketPostionTest_WithQuantityMethod() {
         //Given
-        Long basketId = 3L;
-        Basket basketTest = new Basket(basketId);
-
         Long productId = 2L;
         Product productTest = new Product(productId);
 
-        Long basketPositionId = 3L;
+        Long basketPositionId = 4L;
         BasketPosition basketPositionTest = new BasketPosition(basketPositionId);
+        basketPositionTest.setProductId(productTest);
         basketPositionTest.setQuantity(10);
         int quantity = 20;
+
+        Long basketId = 3L;
+        Basket basketTest = new Basket(basketId);
+
+        Set<BasketPosition> positionSet = new HashSet();
+        positionSet.add(basketPositionTest);
+
+        basketTest.setBasketCreatedSet(positionSet);
+
+        basketPositionTest.setBasket(basketTest);
 
         BasketPositionDTO basketPositionDTOTest = new BasketPositionDTO();
         basketPositionDTOTest.setBasketId(3L);
         basketPositionDTOTest.setProductId(2L);
         basketPositionDTOTest.setQuantity(20);
 
-        given(basketRepository.findById(basketPositionDTOTest.getBasketId())).willReturn(Optional.of(basketTest));
-        given(productRepository.findById(basketPositionDTOTest.getProductId())).willReturn(Optional.of(productTest));
-        given(basketPositionRepository.findById(basketPositionDTOTest.getBasketId())).willReturn(Optional.of(basketPositionTest));
+        given(basketRepository.findById(basketPositionDTOTest.getBasketId()))
+                .willReturn(Optional.of(basketTest));
+        given(productRepository.findById(basketPositionDTOTest.getProductId()))
+                .willReturn(Optional.of(productTest));
+        given(basketPositionRepository.findById(basketPositionTest.getBasketPositionId()))
+                .willReturn(Optional.of(basketPositionTest));
 
         //When
         basketService.addBasketPosition(basketPositionDTOTest);
 
         //Then
-        verify(basketPositionRepository, times(1)).saveAndFlush(basketPositionArgumentCaptor.capture());
+        verify(basketPositionRepository, times(1))
+                .saveAndFlush(basketPositionArgumentCaptor.capture());
         BasketPosition basketPositionResult = basketPositionArgumentCaptor.getValue();
 
-        assertThat(basketPositionTest.getBasketPositionId()).isEqualTo(basketPositionResult.getBasketPositionId());
         assertThat(basketPositionTest.getProductId()).isEqualTo(basketPositionResult.getProductId());
-        assertThat(basketPositionTest.getQuantity()).isEqualTo(basketPositionResult.getQuantity());
-
+        assertThat(basketPositionDTOTest.getBasketId()).isEqualTo(basketPositionResult.getBasket().getId());
+        assertThat(basketPositionResult.getQuantity()).isEqualTo(30);
     }
 
     @Test
     public void addBasketPostionTest_Exception() {
-        Long basketId = 0L;
-        Basket basketTest = new Basket(basketId);
-
-        Long productId = 0L;
+        //Given
+        Long productId = 2L;
         Product productTest = new Product(productId);
 
-        Long basketPositionId = 3L;
+        Long basketPositionId = 4L;
         BasketPosition basketPositionTest = new BasketPosition(basketPositionId);
-        basketPositionTest.setQuantity(20);
+        basketPositionTest.setProductId(productTest);
+        basketPositionTest.setQuantity(10);
         int quantity = 20;
 
-        BasketPositionDTO basketPositionDTOTest = new BasketPositionDTO();
-        basketPositionDTOTest.setBasketId(null);
-        basketPositionDTOTest.setProductId(null);
-        basketPositionDTOTest.setQuantity(2);
+        Long basketId = 3L;
 
-        given(basketRepository.findById(basketPositionDTOTest.getBasketId())).willReturn(Optional.of(basketTest));
-        given(productRepository.findById(basketPositionDTOTest.getProductId())).willReturn(Optional.of(productTest));
+        Basket basketTest = new Basket(basketId);
+
+        basketPositionTest.setBasket(basketTest);
+
+        BasketPositionDTO basketPositionDTOTest = new BasketPositionDTO();
+        basketPositionDTOTest.setBasketId(3L);
+        basketPositionDTOTest.setProductId(2L);
+        basketPositionDTOTest.setQuantity(20);
+
+        given(basketRepository.findById(basketPositionDTOTest.getBasketId()))
+                .willReturn(Optional.of(basketTest));
+        given(productRepository.findById(basketPositionDTOTest.getProductId()))
+                .willReturn(Optional.of(productTest));
 
         //When
-        BasketPosition basketPositionForAsserts = basketService.addBasketPosition(basketPositionDTOTest);
+        basketService.addBasketPosition(basketPositionDTOTest);
 
         //Then
-        verify(basketPositionRepository, times(1)).saveAndFlush(basketPositionArgumentCaptor.capture());
-        BasketPosition basketPositionArgumentCaptorValue = basketPositionArgumentCaptor.getValue();
+        verify(basketPositionRepository, times(1))
+                .saveAndFlush(basketPositionArgumentCaptor.capture());
+        BasketPosition basketPositionResult = basketPositionArgumentCaptor.getValue();
 
-        assertThat(basketPositionForAsserts.getBasket()).isEqualTo(basketPositionArgumentCaptorValue.getBasket());
-        assertThat(basketPositionForAsserts.getProductId()).isEqualTo(basketPositionArgumentCaptorValue.getProductId());
-        assertThat(basketPositionForAsserts.getQuantity()).isEqualTo(basketPositionArgumentCaptorValue.getQuantity());
+        assertThat(basketPositionTest.getProductId()).isEqualTo(basketPositionResult.getProductId());
+        assertThat(basketPositionDTOTest.getBasketId()).isEqualTo(basketPositionResult.getBasket().getId());
+        assertThat(basketPositionResult.getQuantity()).isEqualTo(20);
     }
 
     @Test

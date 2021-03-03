@@ -13,7 +13,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
@@ -101,7 +102,8 @@ public class ProductServiceTest {
         productService.deleteProduct(productId);
 
         //Then
-        verify(productRepository, times(1)).deleteById(productIdArgumentCaptor.capture());
+        verify(productRepository, times(1))
+                .deleteById(productIdArgumentCaptor.capture());
         Long expected = productIdArgumentCaptor.getValue();
 
         assertThat(productId).isEqualTo(expected);

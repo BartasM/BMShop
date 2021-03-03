@@ -66,10 +66,16 @@ public class BasketService {
         Optional<Basket> basketOptional = basketRepository.findById(basketPositionDTO.getBasketId());
         Optional<Product> productOptional = productRepository.findById(basketPositionDTO.getProductId());
 
-        if (basketOptional.get().getId() != null && basketOptional.get().getId() > 0
-                && productOptional.get().getId() != null && productOptional.get().getId() > 0) {
-            updateBasketPositionQuantity(basketPositionDTO.getBasketId(),
-                    basketPositionDTO.getProductId(), basketPositionDTO.getQuantity());
+        if (basketOptional.get().getBasketPositionSet() != null &&
+                basketOptional.get().getBasketPositionSet().stream().anyMatch(
+                        p -> p.getProductId().getId().equals(basketPositionDTO.getProductId()))) {
+
+            BasketPosition position = basketOptional.get().getBasketPositionSet().stream()
+                    .filter(p -> p.getProductId().getId().equals(basketPositionDTO.getProductId()))
+                    .findFirst().orElse(null);
+
+            updateBasketPositionQuantity(position.getBasketPositionId(), basketPositionDTO.getQuantity());
+
         } else {
             basketPosition.setBasket(basketOptional.get());
             basketPosition.setProductId(productOptional.get());
@@ -79,10 +85,11 @@ public class BasketService {
         return basketPosition;
     }
 
-    public void updateBasketPositionQuantity(Long basketPositionId, Long productId, int quantity) {
-        BasketPosition basketPosition = basketPositionRepository.findById(basketPositionId).orElseThrow(
-                () -> new IllegalStateException("basketPositionId: " + basketPositionId + " doesn't exist."));
+    public void updateBasketPositionQuantity(Long positionId, int quantity) {
+        BasketPosition basketPosition = basketPositionRepository.findById(positionId).orElseThrow(
+                () -> new IllegalStateException("basketPositionId: " + positionId + " doesn't exist."));
         int newQuantity = basketPosition.getQuantity() + quantity;
+
         basketPosition.setQuantity(newQuantity);
         basketPositionRepository.saveAndFlush(basketPosition);
     }

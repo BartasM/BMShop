@@ -33,14 +33,7 @@ public class ProductControllerIT {
     }
 
     @Test
-    public void productNotFound() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/api/product/0")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    @Test
-    public void getOneProductTest() throws Exception {
+    public void getProductTest() throws Exception {
         Product product = new Product(3L, "Milk", 3.0f, 4.0f, 5.0f);
         Product saveProduct = productRepository.saveAndFlush(product);
 
@@ -56,7 +49,7 @@ public class ProductControllerIT {
     }
 
     @Test
-    public void getAllProductTest() throws Exception {
+    public void getAllProductsTest() throws Exception {
         Product product = new Product(3L, "Milk", 3.0f, 4.0f, 5.0f);
         Product saveProduct = productRepository.saveAndFlush(product);
 
