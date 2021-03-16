@@ -1,6 +1,7 @@
 package com.example.bmshop.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -17,7 +18,9 @@ public class Customer {
             generator = "customer_sequence"
     )
     private Long id;
+    @Size(min = 2)
     private String name;
+    @Size(min = 2)
     private String email;
     private LocalDate dateOfBirth;
     private boolean active;

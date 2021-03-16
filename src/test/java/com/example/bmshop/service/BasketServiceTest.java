@@ -98,7 +98,6 @@ public class BasketServiceTest {
         positionSet.add(basketPositionTest);
 
         basketTest.setBasketCreatedSet(positionSet);
-
         basketPositionTest.setBasket(basketTest);
 
         BasketPositionDTO basketPositionDTOTest = new BasketPositionDTO();
@@ -176,7 +175,7 @@ public class BasketServiceTest {
         basketService.deleteBasket(basketId);
 
         //Then
-        verify(basketRepository,times(1)).deleteById(longArgumentCaptor.capture());
+        verify(basketRepository, times(1)).deleteById(longArgumentCaptor.capture());
         Long result = longArgumentCaptor.getValue();
 
         assertThat(5L).isEqualTo(result);
@@ -184,7 +183,7 @@ public class BasketServiceTest {
 
     @Test
     public void updateBasketPosition() {
-       //Given
+        //Given
         Long basketPositionId = 1L;
         BasketPosition basketPositionTest = new BasketPosition(basketPositionId);
 
@@ -197,7 +196,7 @@ public class BasketServiceTest {
         basketService.updateBasketPosition(basketPositionId, basketPositionModDTOTest);
 
         //Then
-        verify(basketPositionRepository,times(1)).save(basketPositionArgumentCaptor.capture());
+        verify(basketPositionRepository, times(1)).save(basketPositionArgumentCaptor.capture());
         BasketPosition basketPositionResult = basketPositionArgumentCaptor.getValue();
 
         assertThat(basketPositionTest.getBasketPositionId()).isEqualTo(basketPositionResult.getBasketPositionId());

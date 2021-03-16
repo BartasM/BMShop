@@ -15,6 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.transaction.Transactional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(classes = BmshopApplication.class)
 @AutoConfigureMockMvc
 @ActiveProfiles({"test"})
@@ -62,6 +66,22 @@ public class ProductControllerIT {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].name", CoreMatchers.hasItems("Milk", "Apple")))
+
+        ;
+    }
+
+    @Test
+    @Transactional
+    public void addProductTest() throws Exception {
+        Product product = new Product(3L, "Milk", 3.0f, 4.0f, 5.0f);
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/product/")
+                //.content(JSONUtil.to(product))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Product productAfterUpdate = productRepository.findAll().iterator().next();
+        assertThat(productAfterUpdate.getName()).isEqualTo("Milk");
 
         ;
     }
