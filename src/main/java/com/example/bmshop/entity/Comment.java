@@ -1,12 +1,10 @@
 package com.example.bmshop.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
+@Data
 @Entity
 public class Comment {
     @SequenceGenerator(
@@ -41,32 +39,44 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Product productId, String commentText) {
-        this.productId = productId;
-        this.commentText = commentText;
-    }
-
-    public Comment(Customer customerId, String commentText) {
-        this.customerId = customerId;
-        this.commentText = commentText;
-    }
-
-    public Comment(Basket basketId, String commentText) {
-        this.basketId = basketId;
-        this.commentText = commentText;
-    }
-
-    public Comment(BasketPosition basketPositionId, String commentText) {
-        this.basketPositionId = basketPositionId;
-        this.commentText = commentText;
-    }
-
-    public Comment(Long commentId, Customer customerId, Basket basketId, BasketPosition basketPositionId, String commentText) {
+    public Comment(Long commentId, Customer customer, Basket basket, BasketPosition basketPosition, Product product, String commentText) {
         this.commentId = commentId;
-        this.customerId = customerId;
-        this.basketId = basketId;
-        this.basketPositionId = basketPositionId;
+        this.customer = customer;
+        this.basket = basket;
+        this.basketPosition = basketPosition;
+        this.product = product;
         this.commentText = commentText;
     }
+
+    public Comment(Long commentId, Customer customer, Basket basket, BasketPosition basketPosition, Product product) {
+        this.commentId = commentId;
+        this.customer = customer;
+        this.basket = basket;
+        this.basketPosition = basketPosition;
+        this.product = product;
+    }
+
+    public Comment(Long commentId, Customer customer, Basket basket, BasketPosition basketPosition) {
+        this.commentId = commentId;
+        this.customer = customer;
+        this.basket = basket;
+        this.basketPosition = basketPosition;
+    }
+
+    public Comment(Long commentId, Customer customer, Basket basket) {
+        this.commentId = commentId;
+        this.customer = customer;
+        this.basket = basket;
+    }
+
+    public Comment(Long commentId, Customer customer) {
+        this.commentId = commentId;
+        this.customer = customer;
+    }
+
+    public Comment(Long commentId) {
+        this.commentId = commentId;
+    }
+
 
 }

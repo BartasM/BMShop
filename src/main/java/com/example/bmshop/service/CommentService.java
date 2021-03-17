@@ -43,7 +43,7 @@ public class CommentService {
     @Transactional
     public void addCommentToCustomer(Long customerId, CommentDTO comment_text){
         Comment comment = new Comment();
-        comment.setCustomerId(customerRepository.getOne(customerId));
+        comment.setCustomer(customerRepository.getOne(customerId));
         comment.setCommentText(comment_text.getCommentText());
         commentRespository.save(comment);
     }
@@ -51,7 +51,7 @@ public class CommentService {
     @Transactional
     public void addCommentToProduct(Long productId, CommentDTO comment_text){
         Comment comment = new Comment();
-        comment.setProductId(productRepository.getOne(productId));
+        comment.setProduct(productRepository.getOne(productId));
         comment.setCommentText(comment_text.getCommentText());
         commentRespository.save(comment);
     }
@@ -59,14 +59,13 @@ public class CommentService {
     @Transactional
     public void addCommentToBasket(Long basketId, CommentDTO comment_text){
         Comment comment = new Comment();
-        comment.setBasketId(basketRepository.getOne(basketId));
+        comment.setBasket(basketRepository.getOne(basketId));
         comment.setCommentText(comment_text.getCommentText());
         commentRespository.save(comment);
     }
 
 
     // DELETE COMMENTS
-
     public void deleteCommentById(Long commentId){
         commentRespository.deleteById(commentId);
     }
@@ -77,21 +76,15 @@ public class CommentService {
         commentRespository.deleteById(basketId);
     }
 
-
     public void deleteCommentByCustomerId(Long customerId){
         List<Comment> commentList = commentRespository
                 .findAll()
                 .stream()
-                .filter(c -> c.getCustomerId().getId().equals(customerId))
+                .filter(c -> c.getCustomer().getId().equals(customerId))
                 .collect(Collectors.toList());
 
         commentRespository.deleteAll(commentList);
     }
-
-
-
-
-
 
     public void updateComment(Comment comment){
         comment.setCommentId(comment.getCommentId());

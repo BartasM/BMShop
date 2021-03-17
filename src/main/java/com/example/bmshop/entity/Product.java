@@ -1,12 +1,14 @@
 package com.example.bmshop.entity;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Product implements Serializable {
+public class Product extends RepresentationModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 853329709778725025L;
